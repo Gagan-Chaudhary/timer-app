@@ -17,6 +17,34 @@ const ListStyle = {
   borderRadius: "15px",
 };
 
+let convertTime = () => {
+  var d = new Date(),
+    month = "" + (d.getMonth() + 1),
+    day = "" + d.getDate(),
+    year = d.getFullYear();
+
+  if (month.length < 2) month = "0" + month;
+  if (day.length < 2) day = "0" + day;
+
+  var t = new Date().toISOString().substring(11, 16);
+  console.log(t);
+  var dateObj = new Date(Date.now());
+  var hours = dateObj.getUTCHours();
+  var minutes = dateObj.getUTCMinutes();
+  var seconds = dateObj.getSeconds();
+
+  var timeString =
+    hours.toString().padStart(2, "0") +
+    ":" +
+    minutes.toString().padStart(2, "0") +
+    ":" +
+    seconds.toString().padStart(2, "0");
+  console.log(timeString);
+  d = [day, month, year].join(".");
+  d = d + " " + timeString;
+  return d;
+};
+
 const Main = () => {
   const [timers, setTimers] = useState([]);
   const [input, setInput] = useState(50);
@@ -42,33 +70,9 @@ const Main = () => {
   const addTimer = (event) => {
     event.preventDefault();
 
-    var d = new Date(),
-      month = "" + (d.getMonth() + 1),
-      day = "" + d.getDate(),
-      year = d.getFullYear();
-
-    if (month.length < 2) month = "0" + month;
-    if (day.length < 2) day = "0" + day;
-
-    var t = new Date().toISOString().substring(11, 16);
-    console.log(t);
-    var dateObj = new Date(Date.now());
-    var hours = dateObj.getUTCHours();
-    var minutes = dateObj.getUTCMinutes();
-    var seconds = dateObj.getSeconds();
-
-    var timeString =
-      hours.toString().padStart(2, "0") +
-      ":" +
-      minutes.toString().padStart(2, "0") +
-      ":" +
-      seconds.toString().padStart(2, "0");
-    console.log(timeString);
-    d = [day, month, year].join(".");
-    d = d + " " + timeString;
-
+    let t = convertTime();
     console.log("👽", "I am working");
-    let arr = [input, d];
+    let arr = [input, t];
     setTimers([...timers, arr]);
     setInput("");
   };
